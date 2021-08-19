@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Minecraft Statue generator 1.17+</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate player-statues in Vanilla Minecraft! No mods or resourcepacks required.">
+    <meta name="author" content="Ben Ehrengruber">
+    <meta name="keywords" content="Minecraft, Generator, Player, Statue, Posable, Vanilla, 1.17+, 1.17, Online, Instant, Logstone, Jespertheend">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="title">
+            <h1>Statue generator</h1>
+            <h2>Create posable player-statues in just a few minutes</h2>
+        </div>
+    </div>
+    <div class="middle-wrapper">
+        <form action="" id="input">
+            <span>Just enter a playername</span>
+            <span>and hit generate!</span>
+            <input id="playername" type="text" placeholder="playername" pattern="^[A-Za-z0-9_]{3,16}$" required>
+            <input type="submit" id="generate" value="Generate">
+        </form>
+    </div>
+    <div class="bottom-wrapper">
+        <p id="status"></p>
+        <progress id="progress" min="0" value="" max="25"></progress>
+        <div class="area-wrapper">
+            <textarea id="output" rows="8" cols="80" placeholder="output will be here" readonly></textarea>
+        </div>
+    </div>
+    <input type="submit" id="copy" class="button" value="Copy Commands" />
+    <br>
+    <div id="preview">
+
+    </div>
+    <br>
+    <p>To summon a Player-statue first download the datapack with the button below.</p>
+    <p>Once you have done that copy the above commands into a mc-function and execute them.</p>
+    <a href="/imposter.zip" class="button" download>Download Datapack</a>
+    <p>Now you can use the following commands to pose your statue:</p>
+    <br>
+    <code>
+#multiply the angle you want by 100 --> 90° = 9000
+
+#rotate the entire statue
+/scoreboard players set @e[tag=imposter,tag=main] imposter_x 9000
+
+#rotate the neck
+/scoreboard players set @e[tag=imposter,tag=neck] imposter_x 9000
+
+#rotate the right arm
+/scoreboard players set @e[tag=imposter,tag=shoulder-right] imposter_x 9000
+
+#rotate the left arm
+/scoreboard players set @e[tag=imposter,tag=shoulder-left] imposter_x 9000
+
+#rotate the right leg
+/scoreboard players set @e[tag=imposter,tag=leg-right] imposter_x 9000
+
+#rotate the left leg
+/scoreboard players set @e[tag=imposter,tag=leg-left] imposter_x 9000
+
+#Delete the nearest statue
+/function imposter:kill
+    </code>
+    <script src="./index.js"></script>
+    <footer>
+        <p>Thanks to <a href="https://minotar.net/">Minotar for the mojang api</a> and <a href="https://mineskin.org/">Mineskin</a> for the skin upload api.</p>
+        <p>Special Thanks to <a href="https://www.youtube.com/channel/UCXkb6BzAFbbt4G33fkaS7sg">Logstone</a> and <a href="https://www.youtube.com/user/jespertheend2">Jespertheend</a> who came up with the <a href="https://statue.jespertheend.com/">original version of this tool</a>            that became outdated.</p>
+    </footer>
+</body>
+
+</html>
