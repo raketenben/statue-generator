@@ -53,20 +53,23 @@
 #rotate the entire statue
 /scoreboard players set @e[tag=imposter,tag=main] imposter_x 9000
 
-#rotate the neck
-/scoreboard players set @e[tag=imposter,tag=neck] imposter_x 9000
+#rotate the neck x
+/scoreboard players set @e[tag=imposter,tag=neck] imposter_ro 9000
+
+#rotate the neck y
+/scoreboard players set @e[tag=imposter,tag=neck] imposter_y 4500
 
 #rotate the right arm
-/scoreboard players set @e[tag=imposter,tag=shoulder-right] imposter_x 9000
+/scoreboard players set @e[tag=imposter,tag=shoulder-right] imposter_y 9000
 
 #rotate the left arm
-/scoreboard players set @e[tag=imposter,tag=shoulder-left] imposter_x 9000
+/scoreboard players set @e[tag=imposter,tag=shoulder-left] imposter_y 9000
 
 #rotate the right leg
-/scoreboard players set @e[tag=imposter,tag=leg-right] imposter_x 9000
+/scoreboard players set @e[tag=imposter,tag=leg-right] imposter_y 9000
 
 #rotate the left leg
-/scoreboard players set @e[tag=imposter,tag=leg-left] imposter_x 9000
+/scoreboard players set @e[tag=imposter,tag=leg-left] imposter_y 9000
 
 #Delete the nearest statue
 /function imposter:kill
