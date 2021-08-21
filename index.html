@@ -12,6 +12,19 @@
     <meta name="description" content="Generate player-statues in Vanilla Minecraft! No mods or resourcepacks required.">
     <meta name="author" content="Ben Ehrengruber">
     <meta name="keywords" content="Minecraft, Generator, Player, Statue, Posable, Vanilla, 1.17+, 1.17, Online, Instant, Logstone, Jespertheend">
+    <meta name="google-site-verification" content="ZTVAjpaiBbXDGDblUxboYt16DpGWIZ0npgrO50cLQCs" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NC319616T"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-6NC319616T');
+    </script>
 </head>
 
 <body>
@@ -24,8 +37,9 @@
     <div class="middle-wrapper">
         <form action="" id="input">
             <span>Just enter a playername</span>
-            <span>and hit generate!</span>
-            <input id="playername" type="text" placeholder="playername" pattern="^[A-Za-z0-9_]{3,16}$" required>
+            <input id="playername" type="text" placeholder="playername" pattern="^[A-Za-z0-9_]{3,16}$">
+            <span>or upload a skin!</span>
+            <input type="file" name="skinfile" id="skinfile">
             <input type="submit" id="generate" value="Generate">
         </form>
     </div>
@@ -54,31 +68,38 @@
 /scoreboard players set @e[tag=imposter,tag=main] imposter_x 9000
 
 #rotate the neck x
-/scoreboard players set @e[tag=imposter,tag=neck] imposter_ro 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_x_head 9000
 
 #rotate the neck y
-/scoreboard players set @e[tag=imposter,tag=neck] imposter_y 4500
+/scoreboard players set @e[tag=imposter,tag=main] imposter_y_head 4500
 
 #rotate the right arm
-/scoreboard players set @e[tag=imposter,tag=shoulder-right] imposter_y 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_x_ra 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_y_ra 9000
 
 #rotate the left arm
-/scoreboard players set @e[tag=imposter,tag=shoulder-left] imposter_y 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_x_la 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_y_la 9000
 
 #rotate the right leg
-/scoreboard players set @e[tag=imposter,tag=leg-right] imposter_y 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_x_rl 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_y_rl 9000
 
 #rotate the left leg
-/scoreboard players set @e[tag=imposter,tag=leg-left] imposter_y 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_x_ll 9000
+/scoreboard players set @e[tag=imposter,tag=main] imposter_y_ll 9000
 
 #Delete the nearest statue
 /function imposter:kill
+
+#Disable live movement from scorebaord values
+#This way you can pose them with the Pose value in nbt
+/tag @e[sort=nearest,tag=main,limit=1] remove live
     </code>
     <br>
     <p>Additional Information:</p>
     <br>
     <p>This generator works best with the Steve skin, using the slim(Alex) version might cause some artifacts on the arms.</p>
-    <p>Please also note that this tool should be used with 64x64 skins, otherwise the right and left leg will appear black.</p>
     <br>
     <script src="./index.js"></script>
     <footer>

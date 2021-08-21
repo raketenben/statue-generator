@@ -118,7 +118,9 @@ main {
     width: clamp(10em, 50%, 75em);
 }
 
-input {
+input[type="text"],
+input[type="submit"],
+input[type="button"] {
     text-align: center;
     border-radius: 30px;
     padding: 5px;

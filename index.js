@@ -2,6 +2,7 @@ let status = document.getElementById("status");
 let progress = document.getElementById("progress");
 let inputForm = document.getElementById("input");
 let playernameInput = document.getElementById("playername");
+let fileInput = document.getElementById("skinfile");
 let output = document.getElementById("output");
 
 let preview = document.getElementById("preview");
@@ -18,7 +19,6 @@ copy.addEventListener("click", function(evt) {
 })
 
 inputForm.addEventListener("submit", generate);
-
 
 let noHandItemInFirstN = 6;
 let handSide = [true, true, false, false, true, true, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, true, true, true];
@@ -52,7 +52,7 @@ let tags = [
     ["chest", "chest-top-left"],
     ["chest", "chest-middle-left"],
     ["chest", "chest-bottom-left"],
-    ["main"],
+    ["main", "live"],
     ["neck"],
     ["shoulder-right"],
     ["shoulder-left"],
@@ -60,6 +60,12 @@ let tags = [
     ["hip-left"],
 ];
 
+//backside -    ,dx:3,dy:1
+//front -       ,dx:1,dy:1
+//left -        ,dx:2,dy:1
+//right -       ,dx:0,dy:1
+//top -         ,dx:1,dy:0
+//bottom -      ,dx:2,dy:0
 
 let mappings = [
     [
@@ -130,6 +136,13 @@ let mappings = [
         { sx: 13, sy: 7, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
     ],
     [
+        /*fallback old skin*/
+        { sx: 11, sy: 4, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 11, sy: 4, dx: 2, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 10, sy: 5, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 11, sy: 5, dx: 1, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 12, sy: 5, dx: 2, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 13, sy: 5, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
         /* arm left*/
         { sx: 9, sy: 12, dx: 1, dy: 0, rotation: 0, osx: 4, osy: 0 },
         { sx: 10, sy: 12, dx: 2, dy: 0, rotation: 0, osx: 4, osy: 0 },
@@ -139,6 +152,14 @@ let mappings = [
         { sx: 11, sy: 13, dx: 3, dy: 1, rotation: 0, osx: 4, osy: 0 },
     ],
     [
+        /*fallback old skin*/
+        { sx: 11, sy: 5, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 11, sy: 5, dx: 2, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 10, sy: 6, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 11, sy: 6, dx: 1, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 12, sy: 6, dx: 2, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 13, sy: 6, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        /*normal*/
         { sx: 9, sy: 13, dx: 1, dy: 0, rotation: 0, osx: 4, osy: 0 },
         { sx: 10, sy: 13, dx: 2, dy: 0, rotation: 0, osx: 4, osy: 0 },
         { sx: 8, sy: 14, dx: 0, dy: 1, rotation: 0, osx: 4, osy: 0 },
@@ -147,6 +168,14 @@ let mappings = [
         { sx: 11, sy: 14, dx: 3, dy: 1, rotation: 0, osx: 4, osy: 0 },
     ],
     [
+        /* fallback*/
+        { sx: 11, sy: 6, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 12, sy: 4, dx: 2, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 10, sy: 7, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 11, sy: 7, dx: 1, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 12, sy: 7, dx: 2, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 13, sy: 7, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        /*normal*/
         { sx: 9, sy: 14, dx: 1, dy: 0, rotation: 0, osx: 4, osy: 0 },
         { sx: 10, sy: 12, dx: 2, dy: 0, rotation: 0, osx: 4, osy: 0 },
         { sx: 8, sy: 15, dx: 0, dy: 1, rotation: 0, osx: 4, osy: 0 },
@@ -180,6 +209,13 @@ let mappings = [
         { sx: 3, sy: 7, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
     ],
     [
+        /* fallback*/
+        { sx: 1, sy: 4, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 1, sy: 4, dx: 2, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 0, sy: 5, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 1, sy: 5, dx: 1, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 2, sy: 5, dx: 2, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 3, sy: 5, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
         /* leg left*/
         { sx: 5, sy: 12, dx: 1, dy: 0, rotation: 0, osx: -4, osy: 0 },
         { sx: 5, sy: 12, dx: 2, dy: 0, rotation: 0, osx: -4, osy: 0 },
@@ -189,6 +225,14 @@ let mappings = [
         { sx: 7, sy: 13, dx: 3, dy: 1, rotation: 0, osx: -4, osy: 0 },
     ],
     [
+        /* fallback*/
+        { sx: 1, sy: 5, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 1, sy: 5, dx: 2, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 0, sy: 6, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 1, sy: 6, dx: 1, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 2, sy: 6, dx: 2, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 3, sy: 6, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        /*normal*/
         { sx: 5, sy: 13, dx: 1, dy: 0, rotation: 0, osx: -4, osy: 0 },
         { sx: 5, sy: 13, dx: 2, dy: 0, rotation: 0, osx: -4, osy: 0 },
         { sx: 4, sy: 14, dx: 0, dy: 1, rotation: 0, osx: -4, osy: 0 },
@@ -197,6 +241,14 @@ let mappings = [
         { sx: 7, sy: 14, dx: 3, dy: 1, rotation: 0, osx: -4, osy: 0 },
     ],
     [
+        /* fallback*/
+        { sx: 1, sy: 6, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 2, sy: 4, dx: 2, dy: 0, rotation: 0, osx: 0, osy: 4 },
+        { sx: 0, sy: 7, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 1, sy: 7, dx: 1, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 2, sy: 7, dx: 2, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        { sx: 3, sy: 7, dx: 3, dy: 1, rotation: 0, osx: 0, osy: 4 },
+        /*normal*/
         { sx: 5, sy: 14, dx: 1, dy: 0, rotation: 0, osx: -4, osy: 0 },
         { sx: 6, sy: 12, dx: 2, dy: 0, rotation: 0, osx: -4, osy: 0 },
         { sx: 4, sy: 15, dx: 0, dy: 1, rotation: 0, osx: -4, osy: 0 },
@@ -205,12 +257,6 @@ let mappings = [
         { sx: 7, sy: 15, dx: 3, dy: 1, rotation: 0, osx: -4, osy: 0 },
     ],
     [
-        //backside -    ,dx:3,dy:1
-        //front -       ,dx:1,dy:1
-        //left -        ,dx:2,dy:1
-        //right -       ,dx:0,dy:1
-        //top -         ,dx:1,dy:0
-        //bottom -      ,dx:2,dy:0
         /* body right*/
         { sx: 5, sy: 4, dx: 1, dy: 0, rotation: 0, osx: 0, osy: 4 },
         { sx: 4, sy: 5, dx: 0, dy: 1, rotation: 0, osx: 0, osy: 4 },
@@ -251,17 +297,22 @@ let mappings = [
 async function generate(evt) {
     evt.preventDefault();
 
-    status.innerText = "";
+    status.innerText = "Initializing";
     output.value = "";
     preview.innerHTML = "";
 
-
     let _playername = playernameInput.value;
 
-    let skinBlob = await getSkin(_playername);
+    let avilableImage = checkImage();
+    console.log(avilableImage)
 
     let image = document.createElement("img");
-    image.src = window.URL.createObjectURL(skinBlob);
+    if (avilableImage) {
+        image.src = window.URL.createObjectURL(avilableImage);
+    } else {
+        let skinBlob = await getSkin(_playername);
+        image.src = window.URL.createObjectURL(skinBlob);
+    }
     skin = preview.appendChild(image);
 
     image.onload = async() => {
@@ -270,6 +321,12 @@ async function generate(evt) {
         console.log(skinData)
         generateSummonCommand(skinData);
     }
+}
+
+function checkImage() {
+    console.log(fileInput.files);
+    if (!fileInput.files || !fileInput.files[0]) return false;
+    return fileInput.files[0];
 }
 
 function generateSkins(skinImage) {
