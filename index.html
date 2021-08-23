@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Generate player-statues in Vanilla Minecraft! No mods or resourcepacks required.">
-    <meta name="author" content="Ben Ehrengruber">
+    <meta name="description" content="Generate freely poseable skin statues of players given a file or playername online. No mods or resourcepacks required, just Vanilla Minecraft 1.17+! Replacement for the outdated Generator made by Logstone and Jespertheend.">
+    <meta name="author" content="raketenben">
     <meta name="keywords" content="Minecraft, Generator, Player, Statue, Posable, Vanilla, 1.17+, 1.17, Online, Instant, Logstone, Jespertheend">
     <meta name="google-site-verification" content="ZTVAjpaiBbXDGDblUxboYt16DpGWIZ0npgrO50cLQCs" />
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -31,14 +31,14 @@
     <div class="wrapper">
         <div class="title">
             <h1>Statue generator</h1>
-            <h2>Create posable player-statues in just a few minutes</h2>
+            <h2>Create posable player-statues for Minecraft</h2>
         </div>
     </div>
     <div class="middle-wrapper">
         <form action="" id="input">
-            <span>Just enter a playername</span>
-            <input id="playername" type="text" placeholder="playername" pattern="^[A-Za-z0-9_]{3,16}$">
-            <span>or upload a skin!</span>
+            <label for="playername"><span>Just enter a playername</span></label>
+            <input id="playername" name="playername" type="text" placeholder="playername" pattern="^[A-Za-z0-9_]{3,16}$">
+            <label for="skinfile"><span>or upload a skin!</span></label>
             <input type="file" name="skinfile" id="skinfile">
             <input type="submit" id="generate" value="Generate">
         </form>
@@ -56,7 +56,7 @@
 
     </div>
     <br>
-    <p>To summon a Player-statue first download the datapack with the button below.</p>
+    <p>To summon a Player-skin-statue first download the datapack with the button below.</p>
     <p>Once you have done that copy the above commands into a mc-function and execute them.</p>
     <a href="https://github.com/raketenben/statue-generator/releases/download/v1.2/imposter.zip" class="button" download>Download Datapack</a>
     <p>Now you can use the following commands to pose your statue:</p>
@@ -104,7 +104,7 @@
     <script src="./index.js"></script>
     <footer>
         <p>Thanks to <a href="https://minotar.net/">Minotar</a> for the mojang api and <a href="https://mineskin.org/">Mineskin</a> for the skin upload api.</p>
-        <p>Special Thanks to <a href="https://www.youtube.com/channel/UCXkb6BzAFbbt4G33fkaS7sg">Logstone</a> and <a href="https://www.youtube.com/user/jespertheend2">Jespertheend</a> who came up with the <a href="https://statue.jespertheend.com/">original version of this tool</a>            that became outdated.</p>
+        <p>Special Thanks to <a href="https://www.youtube.com/channel/UCXkb6BzAFbbt4G33fkaS7sg">Logstone</a> and <a href="https://www.youtube.com/user/jespertheend2">Jespertheend</a> who came up with the original version of this tool that became outdated.</p>
     </footer>
 </body>
 
