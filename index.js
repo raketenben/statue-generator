@@ -512,7 +512,7 @@ function updateStatueList() {
         statueList.innerHTML += `<tr><td>Name</td><td>Command</td><td></td></tr>`;
         for (var key in datapackStatues) {
             const element = datapackStatues[key];
-            statueList.innerHTML += `<tr><td>${key}</td><td><p>/function imposter:summon/${key}</p></td><td><a href="#" onclick="removeStatue('${key}')">Remove</a></td></tr>`;
+            statueList.innerHTML += `<tr><td>${key}</td><td><p>/function imposter:summon/${key.toLowerCase()}</p></td><td><a href="#" onclick="removeStatue('${key}')">Remove</a></td></tr>`;
         }
     } else {
         statueList.innerHTML += `<tr><td>No statue generated yet</td></tr>`;
@@ -534,7 +534,7 @@ async function generateDatapack() {
 
     for (var key in datapackStatues) {
         const element = datapackStatues[key];
-        datapack.file(`data/imposter/functions/summon/${key}.mcfunction`, element);
+        datapack.file(`data/imposter/functions/summon/${key.toLowerCase()}.mcfunction`, element);
     }
 
     datapack.generateAsync({ type: "blob" }).then(function(blob) {
