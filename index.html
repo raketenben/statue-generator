@@ -35,20 +35,21 @@
     <div class="bottom-wrapper">
         <p id="status"></p>
         <progress id="progress" min="0" value="" max="25"></progress>
-        <div class="area-wrapper">
-            <textarea id="output" rows="8" cols="80" placeholder="output will be here" readonly></textarea>
-        </div>
+        <p>Statues currently in your datapack:</p>
+        <table id="statue-list">
+            <tr>
+                <td>Playername</td>
+                <td>Delete</td>
+            </tr>
+        </table>
+        <a id="download" href="#" onclick="generateDatapack()" class="button">Download Statuepack</a>
     </div>
-    <input type="submit" id="copy" class="button" value="Copy Commands" />
     <br>
     <div id="preview">
 
     </div>
     <br>
-    <p>To summon a Player-skin-statue first download the datapack with the button below.</p>
-    <p>Once you have done that copy the above commands into a mc-function and execute them.</p>
-    <a href="https://github.com/raketenben/statue-generator/releases/download/v1.2/imposter.zip" class="button" download>Download Datapack</a>
-    <p>Now you can use the following commands to pose your statue:</p>
+    <p>Use the following commands to pose your statues:</p>
     <br>
     <code>
 #multiply the angle you want by 100 --> 90° = 9000
@@ -93,8 +94,9 @@
     <br>
     <p>Additional Information:</p>
     <br>
-    <p>This generator works best with the Steve skin, using the slim(Alex) version might cause some artifacts on the arms.</p>
+    <p>Slim Skins(Alex) might have some artifacts on the arms.</p>
     <br>
+    <script src="./jszip.min.js"></script>
     <script src="./index.js"></script>
     <footer>
         <p>Thanks to <a href="https://minotar.net/">Minotar</a> for the mojang api and <a href="https://mineskin.org/">Mineskin</a> for the skin upload api.</p>

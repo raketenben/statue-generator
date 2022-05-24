@@ -3,22 +3,19 @@ let progress = document.getElementById("progress");
 let inputForm = document.getElementById("input");
 let playernameInput = document.getElementById("playername");
 let fileInput = document.getElementById("skinfile");
-let output = document.getElementById("output");
+
+let downloadButton = document.getElementById("download");
+
+let statueList = document.getElementById("statue-list");
 
 let preview = document.getElementById("preview");
 
 let copy = document.getElementById("copy");
 
-copy.addEventListener("click", function(evt) {
-    evt.preventDefault();
-
-    output.select();
-    output.setSelectionRange(0, 99999);
-
-    navigator.clipboard.writeText(output.value);
-})
 
 inputForm.addEventListener("submit", generate);
+
+let datapackStatues = {};
 
 let noHandItemInFirstN = 6;
 let handSide = [true, true, false, false, true, true, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, true, true, true];
@@ -297,8 +294,8 @@ let mappings = [
 async function generate(evt) {
     evt.preventDefault();
 
+    playernameInput.disabled = true;
     status.innerText = "Initializing";
-    output.value = "";
     preview.innerHTML = "";
 
     let _playername = playernameInput.value;
@@ -308,6 +305,7 @@ async function generate(evt) {
 
     let image = document.createElement("img");
     if (avilableImage) {
+        playernameInput.value = avilableImage.name.split(".").reverse()[1];
         image.src = window.URL.createObjectURL(avilableImage);
     } else {
         let skinBlob = await getSkin(_playername);
@@ -429,7 +427,10 @@ function generateSummonCommand(skins) {
         summonCommandArray.push(_summonCommand);
     }
     status.innerText = "Finished!";
-    output.value = summonCommandArray.join("\n");
+    datapackStatues[playernameInput.value] = summonCommandArray.join("\n");
+    localStorage.setItem("datapackStatues", JSON.stringify(datapackStatues));
+    playernameInput.disabled = false;
+    updateStatueList();
 }
 
 function generateSingleCommand(_tags, _right, _hand, _tag) {
@@ -483,3 +484,71 @@ function showError(text) {
     status.innerText = text
     throw Error(text);
 }
+
+function loadDatapack() {
+    return fetch('./imposter.zip')
+        .then(function(response) {
+            if (response.status === 200 || response.status === 0) {
+                return Promise.resolve(response.blob());
+            } else {
+                return Promise.reject(new Error(response.statusText));
+            }
+        })
+        .then(JSZip.loadAsync)
+        .then(function(zip) {
+            return zip
+        })
+}
+
+function removeStatue(name) {
+    delete datapackStatues[name];
+    localStorage.setItem("datapackStatues", JSON.stringify(datapackStatues));
+    updateStatueList();
+}
+
+function updateStatueList() {
+    statueList.innerHTML = "";
+    if (Object.keys(datapackStatues).length > 0) {
+        statueList.innerHTML += `<tr><td>Name</td><td>Command</td><td></td></tr>`;
+        for (var key in datapackStatues) {
+            const element = datapackStatues[key];
+            statueList.innerHTML += `<tr><td>${key}</td><td><p>/function imposter:summon/${key}</p></td><td><a href="#" onclick="removeStatue('${key}')">Remove</a></td></tr>`;
+        }
+    } else {
+        statueList.innerHTML += `<tr><td>No statue generated yet</td></tr>`;
+    }
+    downloadButton.style.display = (Object.keys(datapackStatues).length > 0) ? "block" : "none";
+}
+
+function download(blob, name) {
+    var a = document.createElement("a");
+    a.classList.add("download");
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+}
+
+async function generateDatapack() {
+    let datapack = await loadDatapack();
+
+    for (var key in datapackStatues) {
+        const element = datapackStatues[key];
+        datapack.file(`data/imposter/functions/summon/${key}.mcfunction`, element);
+    }
+
+    datapack.generateAsync({ type: "blob" }).then(function(blob) {
+        download(blob, "imposter.zip");
+    }, function(err) {
+        alert(err);
+    });
+    console.log(datapack);
+}
+
+(() => {
+    let statues = localStorage.getItem("datapackStatues");
+    if (statues) {
+        datapackStatues = JSON.parse(statues);
+    }
+    updateStatueList();
+})();
