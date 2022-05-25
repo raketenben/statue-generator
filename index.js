@@ -20,7 +20,7 @@ let datapackStatues = {};
 let noHandItemInFirstN = 6;
 let handSide = [true, true, false, false, true, true, false, false, false, false, false, true, true, true, false, false, false, true, true, true, false, false, false, true, true, true];
 
-let baseTags = ["imposter"];
+let baseTags = ["statue"];
 
 let tags = [
     ["head", "head-left", "head-top-left-back"],
@@ -486,7 +486,7 @@ function showError(text) {
 }
 
 function loadDatapack() {
-    return fetch('./imposter.zip')
+    return fetch('./statue.zip')
         .then(function(response) {
             if (response.status === 200 || response.status === 0) {
                 return Promise.resolve(response.blob());
@@ -512,7 +512,7 @@ function updateStatueList() {
         statueList.innerHTML += `<tr><td>Name</td><td>Command</td><td></td></tr>`;
         for (var key in datapackStatues) {
             const element = datapackStatues[key];
-            statueList.innerHTML += `<tr><td>${key}</td><td><p>/function imposter:summon/${key}</p></td><td><a href="#" onclick="removeStatue('${key}')">Remove</a></td></tr>`;
+            statueList.innerHTML += `<tr><td>${key}</td><td><p>/function statue:summon/${sanatizeName(key)}</p></td><td><a href="#" onclick="removeStatue('${key}')">Remove</a></td></tr>`;
         }
     } else {
         statueList.innerHTML += `<tr><td>No statue generated yet</td></tr>`;
@@ -534,15 +534,19 @@ async function generateDatapack() {
 
     for (var key in datapackStatues) {
         const element = datapackStatues[key];
-        datapack.file(`data/imposter/functions/summon/${key}.mcfunction`, element);
+        datapack.file(`data/statue/functions/summon/${sanatizeName(key)}.mcfunction`, element);
     }
 
     datapack.generateAsync({ type: "blob" }).then(function(blob) {
-        download(blob, "imposter.zip");
+        download(blob, "statue.zip");
     }, function(err) {
         alert(err);
     });
     console.log(datapack);
+}
+
+function sanatizeName(name) {
+    return name.toLowerCase().replace(/[^a-z0-9/._-]/g, "");
 }
 
 (() => {
