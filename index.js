@@ -306,7 +306,8 @@ async function generate(evt) {
     let image = document.createElement("img");
     if (avilableImage) {
         playernameInput.value = avilableImage.name.split(".").reverse()[1];
-        image.src = window.URL.createObjectURL(avilableImage);
+        let skinBlob = await convertAlexSkin(avilableImage);
+        image.src = window.URL.createObjectURL(skinBlob);
     } else {
         let skinBlob = await getSkin(_playername);
         image.src = window.URL.createObjectURL(skinBlob);
@@ -470,9 +471,41 @@ function hexToInt(hex) {
     return num;
 }
 
+function convertAlexSkin(blob) {
+    return new Promise((res, rej) => {
+        let _canvas = new OffscreenCanvas(64, 64);
+        let _ctx = _canvas.getContext("2d");
+        _ctx.imageSmoothingEnabled = false;
+        let _img = new Image();
+        _img.src = URL.createObjectURL(blob);
+        _img.onload = () => {
+            _ctx.clearRect(0, 0, 64, 64);
+            _ctx.drawImage(_img, 0, 0);
+
+            let isAlex = _ctx.getImageData(54, 20, 1, 1).data[3] < 1;
+            if (isAlex) {
+                //lower layer
+                _ctx.drawImage(_canvas, 44, 16, 20, 32, 45, 16, 20, 32);
+                _ctx.drawImage(_canvas, 48, 16, 20, 32, 49, 16, 20, 32);
+
+                //top layer
+                _ctx.drawImage(_canvas, 36, 48, 28, 16, 37, 48, 28, 16);
+                _ctx.drawImage(_canvas, 40, 48, 28, 16, 41, 48, 28, 16);
+
+                _ctx.drawImage(_canvas, 52, 48, 28, 16, 53, 48, 28, 16);
+                _ctx.drawImage(_canvas, 56, 48, 28, 16, 57, 48, 28, 16);
+
+            }
+            let _imageBlob = _canvas.convertToBlob();
+            res(_imageBlob);
+        }
+    });
+
+}
+
 function getSkin(_playername) {
     return new Promise((res, rej) => {
-        fetch(`https://minotar.net/skin/${_playername}`).then((res) => res.blob()).then((_blob) => {
+        fetch(`https://minotar.net/skin/${_playername}`).then((res) => res.blob()).then(convertAlexSkin).then((_blob) => {
             res(_blob);
         }).catch(() => {
             rej(showError("Skin request failed"));
