@@ -336,7 +336,9 @@ function generateSkins(skinImage) {
     }
 
     async function mapTiles(dst, src, sx, sy, dx, dy, rotation) {
-        let _tile = new OffscreenCanvas(8, 8);
+        let _tile = document.createElement('canvas');
+        _tile.width = 8;
+        _tile.height = 8;
         var _tilectx = _tile.getContext("2d");
         _tilectx.imageSmoothingEnabled = false;
         _tilectx.drawImage(src, sx * 4, sy * 4, 4, 4, 0, 0, 8, 8);
@@ -348,7 +350,9 @@ function generateSkins(skinImage) {
     return new Promise(async(res, rej) => {
         let returnArray = new Array();
         for (let i = 0; i < 26; i++) {
-            let _canvas = new OffscreenCanvas(64, 64);
+            let _canvas = document.createElement('canvas');
+            _canvas.width = 64;
+            _canvas.height = 64;
             let _ctx = _canvas.getContext("2d");
             _ctx.imageSmoothingEnabled = false;
 
@@ -359,7 +363,7 @@ function generateSkins(skinImage) {
                 doubleTiles(_ctx, skinImage, _mapping.sx, _mapping.sy, _mapping.dx, _mapping.dy, _mapping.rotation, _mapping.osx, _mapping.osy, _mapping.odx, _mapping.ody);
             }
 
-            let _imageBlob = await _canvas.convertToBlob();
+            let _imageBlob = await new Promise(resolve => _canvas.toBlob(resolve));
 
             returnArray.push(_imageBlob);
         }
@@ -473,12 +477,14 @@ function hexToInt(hex) {
 
 function convertAlexSkin(blob) {
     return new Promise((res, rej) => {
-        let _canvas = new OffscreenCanvas(64, 64);
+        let _canvas = document.createElement('canvas');
+        _canvas.width = 64;
+        _canvas.height = 64;
         let _ctx = _canvas.getContext("2d");
         _ctx.imageSmoothingEnabled = false;
         let _img = new Image();
         _img.src = URL.createObjectURL(blob);
-        _img.onload = () => {
+        _img.onload = async() => {
             _ctx.clearRect(0, 0, 64, 64);
             _ctx.drawImage(_img, 0, 0);
 
@@ -496,7 +502,7 @@ function convertAlexSkin(blob) {
                 _ctx.drawImage(_canvas, 56, 48, 28, 16, 57, 48, 28, 16);
 
             }
-            let _imageBlob = _canvas.convertToBlob();
+            let _imageBlob = await new Promise(resolve => _canvas.toBlob(resolve));
             res(_imageBlob);
         }
     });
