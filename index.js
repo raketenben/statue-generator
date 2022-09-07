@@ -12,6 +12,7 @@ let preview = document.getElementById("preview");
 
 let copy = document.getElementById("copy");
 
+let active = false;
 
 inputForm.addEventListener("submit", generate);
 
@@ -294,6 +295,12 @@ let mappings = [
 async function generate(evt) {
     evt.preventDefault();
 
+    if (active) {
+        alert("Please wait for the current statue to finish generating.");
+        return;
+    }
+    active = true;
+
     playernameInput.disabled = true;
     status.innerText = "Initializing";
     preview.innerHTML = "";
@@ -435,6 +442,7 @@ function generateSummonCommand(skins) {
     datapackStatues[playernameInput.value] = summonCommandArray.join("\n");
     localStorage.setItem("datapackStatues", JSON.stringify(datapackStatues));
     playernameInput.disabled = false;
+    active = false;
     updateStatueList();
 }
 
