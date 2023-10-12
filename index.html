@@ -2,113 +2,128 @@
 <html lang="de" dir="ltr">
 
 <head>
-    <meta charset="utf-8">
-    <title>Minecraft Statue Generator 1.16+</title>
-    <link rel="icon" href="./favicon.ico">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="index.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Generate freely poseable skin statues of players given a file or playername online. No mods or resourcepacks required, just Vanilla Minecraft 1.16+! Replacement for the outdated Generator made by Logstone and Jespertheend.">
-    <meta name="author" content="raketenben">
-    <meta name="keywords" content="Minecraft, Generator, Player, Statue, Posable, Vanilla, 1.16, 1.16+, 1.17+, 1.17, 1.18, 1.18+, Online, Instant, Logstone, Jespertheend, raketenben">
-    <meta name="google-site-verification" content="ZTVAjpaiBbXDGDblUxboYt16DpGWIZ0npgrO50cLQCs" />
+	<meta charset="utf-8">
+	<title>Statue Generator for Miencraft</title>
+	<link rel="icon" href="./favicon.ico">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="index.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="Generate freely poseable skin statues of players given a file or playername. No mods or resourcepacks required, just Vanilla Minecraft 1.16+! Replacement for the outdated Generator made by Logstone and Jespertheend.">
+	<meta name="author" content="raketenben">
+	<meta name="keywords"
+		content="Minecraft, Generator, Player, Statue, Posable, Vanilla, 1.16, 1.16+, 1.17+, 1.17, 1.18, 1.18+, 1.19, 1.19+, 1.20, 1.20+, Online, Instant, Logstone, Jespertheend, raketenben">
+	<meta name="google-site-verification" content="ZTVAjpaiBbXDGDblUxboYt16DpGWIZ0npgrO50cLQCs" />
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="title">
-            <h1>Statue generator</h1>
-            <h2>Create posable player-statues for Minecraft</h2>
-        </div>
-    </div>
-    <div class="middle-wrapper">
-        <form action="" id="input">
-            <label for="playername"><span>Just enter a playername</span></label>
-            <input id="playername" name="playername" type="text" placeholder="playername" pattern="^[A-Za-z0-9_]{3,16}$">
-            <label for="skinfile"><span>or upload a skin!</span></label>
-            <input type="file" name="skinfile" id="skinfile">
-            <input type="submit" id="generate" value="Generate">
-        </form>
-    </div>
-    <div class="bottom-wrapper">
-        <p id="status"></p>
-        <progress id="progress" min="0" value="0" max="25"></progress>
-        <p>Statues currently in your datapack:</p>
-        <table id="statue-list">
-            <tr>
-                <td>Playername</td>
-                <td>Delete</td>
-            </tr>
-        </table>
-        <a id="download" href="#" onclick="generateDatapack()" class="button">Download Statuepack</a>
-    </div>
-    <br>
-    <div id="preview">
+	<div class="wrapper">
+		<div class="title">
+			<h1>Statue generator</h1>
+			<h2>Create posable player-statues for Minecraft</h2>
+		</div>
+	</div>
+	<div class="side-by-side-wrapper">
+		<div class="middle-wrapper">
+			<form action="" id="input">
+				<label for="playername"><span>Enter a playername</span></label>
+				<input id="playername" name="playername" type="text" placeholder="playername"
+					pattern="^[A-Za-z0-9_]{3,16}$">
+				<label for="skinfile"><span>or upload a skin!</span></label>
+				<input type="file" name="skinfile" id="skinfile">
+				<input type="submit" id="generate" value="Generate">
+			</form>
+		</div>
+		<div class="bottom-wrapper">
+			<p>Statues currently in your datapack:</p>
+			<table id="statue-list">
+				<tr>
+					<td>Playername</td>
+					<td>Delete</td>
+				</tr>
+			</table>
+			<a id="download" href="#" onclick="generateDatapack()" class="button">Download Statuepack</a>
+		</div>
+	</div>
+	<div class="info-wrapper">
+		<p id="status"></p>
+		<progress id="progress" min="0" value="0" max="25"></progress>
+	</div>
+	<div class="side-by-side-wrapper1">
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/FBoC4DYLPuI" title="YouTube video player"
+			frameborder="0"
+			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+			allowfullscreen></iframe>
+		<div class="howto">
+			<div>
+				<span>How to use:</span>
+			</div>
+			<br>
+			<ol>
+				<li>Enter username or slelect a skin</li>
+				<li>Hit Generate</li>
+				<li>Download Statuepack and add it to your world</li>
+				<li>Use the command above to summon your statue</li>
+			</ol>
+		</div>
+	</div>
+	<div class="side-by-side-wrapper1">
+		<div class="preview-wrapper">
+			<div id="preview">
+	
+			</div>
+		</div>
+		<div class="coding">
+			<span>Pose your statues:</span>
+			<div class="code">
+				<p>#multiply the angle you want by 100 --> 90° = 9000</p>
+				<p><br/></p>
+				<p>#rotate the entire statue</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_x 9000</p>
+				<p><br/></p>
+				<p>#rotate the neck x</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_x_head 9000</p>
+				<p><br/></p>
+				<p>#rotate the neck y</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_y_head 4500</p>
+				<p><br/></p>
+				<p>#rotate the right arm</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_x_ra 9000</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_y_ra 9000</p>
+				<p><br/></p>
+				<p>#rotate the left arm</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_x_la 9000</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_y_la 9000</p>
+				<p><br/></p>
+				<p>#rotate the right leg</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_x_rl 9000</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_y_rl 9000</p>
+				<p><br/></p>
+				<p>#rotate the left leg</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_x_ll 9000</p>
+				<p>/scoreboard players set @e[tag=statue,tag=main] statue_y_ll 9000</p>
+				<p><br/></p>
+				<p>#Delete the nearest statue</p>
+				<p>/function statue:kill</p>
+				<p><br/></p>
+				<p>#Disable live movement from scorebaord values</p>
+				<p>#This way you can pose them with the Pose value in nbt</p>
+				<p>/tag @e[sort=nearest,tag=main,limit=1] remove live</p>
+			</div>
 
-    </div>
-    <br>
-    <div>
-        <span>How to use:</span>
-    </div>
-    <br>
-    <ol>
-        <li>Enter Username or Slelect a Skin</li>
-        <li>Hit Generate</li>
-        <li>Download Statuepack and add it to your world</li>
-        <li>Use the command shown above to summon your statue</li>
-    </ol>
-    <br>
-    <br>
-    <p>Pose your statues with the following commands:</p>
-    <br>
-    <code>
-#multiply the angle you want by 100 --> 90° = 9000
-
-#rotate the entire statue
-/scoreboard players set @e[tag=statue,tag=main] statue_x 9000
-
-#rotate the neck x
-/scoreboard players set @e[tag=statue,tag=main] statue_x_head 9000
-
-#rotate the neck y
-/scoreboard players set @e[tag=statue,tag=main] statue_y_head 4500
-
-#rotate the right arm
-/scoreboard players set @e[tag=statue,tag=main] statue_x_ra 9000
-/scoreboard players set @e[tag=statue,tag=main] statue_y_ra 9000
-
-#rotate the left arm
-/scoreboard players set @e[tag=statue,tag=main] statue_x_la 9000
-/scoreboard players set @e[tag=statue,tag=main] statue_y_la 9000
-
-#rotate the right leg
-/scoreboard players set @e[tag=statue,tag=main] statue_x_rl 9000
-/scoreboard players set @e[tag=statue,tag=main] statue_y_rl 9000
-
-#rotate the left leg
-/scoreboard players set @e[tag=statue,tag=main] statue_x_ll 9000
-/scoreboard players set @e[tag=statue,tag=main] statue_y_ll 9000
-
-#Delete the nearest statue
-/function statue:kill
-
-#Disable live movement from scorebaord values
-#This way you can pose them with the Pose value in nbt
-/tag @e[sort=nearest,tag=main,limit=1] remove live
-    </code>
-    <br>
-    <p>Full Tutorial:</p>
-    <br>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/FBoC4DYLPuI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <br>
-    <script src="./jszip.min.js"></script>
-    <script src="./index.js"></script>
-    <footer>
-        <p>Thanks to <a href="https://minotar.net/">Minotar</a> for the mojang api and <a href="https://mineskin.org/">Mineskin</a> for the skin upload api.</p>
-        <p>Special Thanks to <a href="https://www.youtube.com/channel/UCXkb6BzAFbbt4G33fkaS7sg">Logstone</a> and <a href="https://www.youtube.com/user/jespertheend2">Jespertheend</a> who came up with the original version of this tool that became outdated.</p>
-    </footer>
+		</div>
+	</div>
+	<script src="./jszip.min.js"></script>
+	<script src="./index.js"></script>
+	<footer>
+		<p>Thanks to <a href="https://minotar.net/">Minotar</a> for the mojang api and <a
+				href="https://mineskin.org/">Mineskin</a> for the skin upload api.</p>
+		<p>Special Thanks to <a href="https://www.youtube.com/channel/UCXkb6BzAFbbt4G33fkaS7sg">Logstone</a> and <a
+				href="https://www.youtube.com/user/jespertheend2">Jespertheend</a> who came up with the original version
+			of this tool that became outdated.</p>
+	</footer>
 </body>
 
 </html>
