@@ -28,7 +28,7 @@
 	</td>
 	<td>
 		<div class="flex flex-row items-center">
-			<span class="text-md px-2">/function statue:summon/{statue.username}</span>
+			<span class="text-md px-2" translate="no">/function statue:summon/{statue.username}</span>
 			<button
 				class="bg-primary-500 chip variant-soft hover:variant-filled px-2 p-1"
 				use:clipboard={'/function statue:summon/' + statue.username}>Copy</button
