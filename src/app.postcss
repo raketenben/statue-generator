@@ -12,3 +12,12 @@ table { height: 1px; }
 tr { height: 100%; }
 td { height: 100%; }
 td > div { height: 100%; }
+
+@layer components {
+	.link {
+		@apply text-primary-500 ;
+	}
+	.link:hover {
+		@apply underline;
+	}
+}

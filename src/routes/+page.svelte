@@ -3,6 +3,7 @@
 	import StatueCommands from "$lib/StatueCommands.svelte";
 	import SkinSelector from "$lib/SkinSelector.svelte";
 	import TutorialPanel from "$lib/TutorialPanel.svelte";
+	import Thanks from "$lib/Thanks.svelte";
 </script>
 <header class="bg-surface-700 p-4">
 	<h1 class="h1 text-primary-500 font-bold">Statue generator</h1>
@@ -13,5 +14,6 @@
 	<DatpackExporter />
 	<StatueCommands />
 	<TutorialPanel />
+	<Thanks />
 </main>
 <!-- class="grid grid-auto-cols md:grid-cols-3 gap-5 p-5" -->
