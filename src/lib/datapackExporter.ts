@@ -4,7 +4,7 @@ import { convertUUID, createUUIDString, sanatizeName } from "./utilities";
 import { get } from "svelte/store";
 import versions from "./datapackVersions";
 
-let statues_right_handed = {
+const statues_right_handed = {
     headTopLeftBack: true,
     headBottomLeftBack : true,
     headTopRightBack : false,
@@ -62,7 +62,7 @@ const statue_tags = {
     chestBottomLeft : ["chest", "chest-bottom-left"]
 };
 
-let helper_tags = [
+const helper_tags = [
     ["main", "live"],
     ["neck"],
     ["shoulder-right"],
@@ -73,11 +73,11 @@ let helper_tags = [
 
 const baseTags = ["statue"];
 
-let getHeadOwnerNbt = (packFormat : number,skinData : SkinData) => {
-	let texture = skinData.texture;
-	let uuid = createUUIDString(convertUUID(skinData.uuid));
-	let signature = texture.signature;
-	let value = texture.value;
+const getHeadOwnerNbt = (packFormat : number,skinData : SkinData) => {
+	const texture = skinData.texture;
+	const uuid = createUUIDString(convertUUID(skinData.uuid));
+	const signature = texture.signature;
+	const value = texture.value;
 	if(packFormat >= 5 && packFormat <= 40) {
 		return `,tag:{SkullOwner:{Id:${uuid},Properties:{textures:[{ Value:"${value}",Signature:"${signature}"}]}}}`;
 	}else if(packFormat >= 41) {
@@ -86,20 +86,20 @@ let getHeadOwnerNbt = (packFormat : number,skinData : SkinData) => {
 	return "";
 }
 
-let getHandNbt = (packFormat : number, rightHanded : boolean,itemNbt : string) : string => {
+const getHandNbt = (packFormat : number, rightHanded : boolean,itemNbt : string) : string => {
 	return ",HandItems:[" + ((rightHanded) ? `{Count:1b,id:"minecraft:player_head"${itemNbt}},{}` : `{},{Count:1b,id:"minecraft:player_head"${itemNbt}}`) + "]";
 }
 
-let generateSummonCommand = (packFormat : number, tags : string[],skinData : SkinData | null, rightHanded : boolean) => {
-	let handNbt = (skinData) ? getHandNbt(packFormat,rightHanded,getHeadOwnerNbt(packFormat,skinData)) : "";
-	let tagList = tags.concat(baseTags).join(`","`);
-	let tagsNbt = `,Tags:["${tagList}"]`;
-	let mainNbt = `summon minecraft:armor_stand ~ ~ ~ {Invulnerable:1b,DisabledSlots:2096896,Marker:1b,ShowArms:1b,NoGravity:1b,NoBasePlate:1b,Invisible:1b${tagsNbt}${handNbt}}`;
+const generateSummonCommand = (packFormat : number, tags : string[],skinData : SkinData | null, rightHanded : boolean) => {
+	const handNbt = (skinData) ? getHandNbt(packFormat,rightHanded,getHeadOwnerNbt(packFormat,skinData)) : "";
+	const tagList = tags.concat(baseTags).join(`","`);
+	const tagsNbt = `,Tags:["${tagList}"]`;
+	const mainNbt = `summon minecraft:armor_stand ~ ~ ~ {Invulnerable:1b,DisabledSlots:2096896,Marker:1b,ShowArms:1b,NoGravity:1b,NoBasePlate:1b,Invisible:1b${tagsNbt}${handNbt}}`;
 	return mainNbt;
 }
 
-let generateSummonFunction = (packFormat : number,statue : Statue): string  => {
-	let commands = [];
+const generateSummonFunction = (packFormat : number,statue : Statue): string  => {
+	const commands = [];
 	//generate heads
 	for(const [part, skinData] of Object.entries(statue.parts)){
 		commands.push(generateSummonCommand(packFormat,statue_tags[part as StatuePartKey],skinData,statues_right_handed[part as StatuePartKey]));
@@ -112,7 +112,7 @@ let generateSummonFunction = (packFormat : number,statue : Statue): string  => {
 	return commands.join("\n");
 };
 
-let loadDatapackTemplate = async () => {
+const loadDatapackTemplate = async () => {
     return fetch('./statue.zip')
         .then(function(response) {
             if (response.status === 200)
@@ -125,17 +125,17 @@ let loadDatapackTemplate = async () => {
         })
 }
 
-let createDatapack = async (packFormat : number) : Promise<Blob> => {
+const createDatapack = async (packFormat : number) : Promise<Blob> => {
 	return new Promise(async (res, rej) => {
-		let datapack = await loadDatapackTemplate(); 
+		const datapack = await loadDatapackTemplate();
 
-		let min_format = packFormat;
-		let min_format_index = versions.findIndex(version => version.value == packFormat);
+		const min_format = packFormat;
+		const min_format_index = versions.findIndex(version => version.value == packFormat);
 		let max_format = versions[min_format_index + 1]?.value;
 		//assume it's gonna stay compatible with the next version
 		if(!max_format) max_format = 1000;
 
-		let mcmeta = JSON.stringify({
+		const mcmeta = JSON.stringify({
 			pack: {
 				pack_format:packFormat,
 				supported_formats: [min_format,max_format],
@@ -144,11 +144,14 @@ let createDatapack = async (packFormat : number) : Promise<Blob> => {
 		})
 		datapack.file('pack.mcmeta',mcmeta)
 
-		let all_statues = get(statues);
-		for(let statue of all_statues){
-			let summon_function = generateSummonFunction(packFormat,statue);
-			let name = sanatizeName(statue.username);
-			datapack.file(`data/statue/functions/summon/${name}.mcfunction`, summon_function);
+		const all_statues = get(statues);
+		for(const statue of all_statues){
+			const summon_function = generateSummonFunction(packFormat,statue);
+			const name = sanatizeName(statue.username);
+
+			const filename = (packFormat >= 41) ? `data/statue/function/summon/${name}.mcfunction` : `data/statue/functions/summon/${name}.mcfunction`;
+
+			datapack.file(filename, summon_function);
 		}
 
 		datapack.generateAsync({ type: "blob" }).then((blob) => {
