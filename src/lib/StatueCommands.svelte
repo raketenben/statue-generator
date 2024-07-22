@@ -14,7 +14,7 @@
 	<CodeBlock language="mcfunction" code={`/tag @e[sort=nearest,tag=main,limit=1] remove live`} buttonCopied="✅"></CodeBlock>
 	<p class="p-2 pb-1 pt-6 text-sm text-secondary-500">Rotate the entire statue</p>
 	<p class="p-2 pb-1 pt-0 text-xs">( Multiply the angle you want by 100 → 90° = 9000 )</p>
-	<CodeBlock language="mcfunction" code={`/scoreboard players set @e[tag=statue,tag=main] statue_x 9000`} buttonCopied="✅"></CodeBlock>
+	<CodeBlock language="mcfunction" code={`/scoreboard players set @e[tag=statue,tag=main,sort=nearest,limit=1] statue_x 9000`} buttonCopied="✅"></CodeBlock>
 	<p class="p-2 pb-1 pt-6 text-sm text-secondary-500">Rotate specific limbs</p>
 	<p class="p-2 pb-1 pt-0 text-sm">All other limbs can be rotated in the same way, with the respective scoreboard names:</p>
 	<CodeBlock language="mcfunction" code={`#head
