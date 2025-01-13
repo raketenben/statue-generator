@@ -100,6 +100,8 @@ const generateSummonCommand = (packFormat : number, tags : string[],skinData : S
 
 const generateSummonFunction = (packFormat : number,statue : Statue): string  => {
 	const commands = [];
+	//up counter
+	commands.push("scoreboard players add GLOBAL statue_id 1");
 	//generate heads
 	for(const [part, skinData] of Object.entries(statue.parts)){
 		commands.push(generateSummonCommand(packFormat,statue_tags[part as StatuePartKey],skinData,statues_right_handed[part as StatuePartKey]));
@@ -108,6 +110,8 @@ const generateSummonFunction = (packFormat : number,statue : Statue): string  =>
 	for(let i = 0; i < 6; i++){
 		commands.push(generateSummonCommand(packFormat,helper_tags[i],null,false));
 	}
+	//set scoreboard for statue
+	commands.push("execute as @e[tag=statue] unless score @s statue_id = @s statue_id run scoreboard players operation @s statue_id = GLOBAL statue_id");
 
 	return commands.join("\n");
 };
