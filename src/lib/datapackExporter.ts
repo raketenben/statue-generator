@@ -111,7 +111,7 @@ const generateSummonFunction = (packFormat : number,statue : Statue): string  =>
 		commands.push(generateSummonCommand(packFormat,helper_tags[i],null,false));
 	}
 	//set scoreboard for statue
-	commands.push("execute as @e[tag=statue] unless score @s statue_id = @s statue_id run scoreboard players operation @s statue_id = GLOBAL statue_id");
+	commands.push("execute at @s as @e[tag=statue,sort=nearest,limit=32] unless score @s statue_id = @s statue_id run scoreboard players operation @s statue_id = GLOBAL statue_id");
 
 	return commands.join("\n");
 };
