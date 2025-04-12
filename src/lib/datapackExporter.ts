@@ -87,7 +87,13 @@ const getHeadOwnerNbt = (packFormat : number,skinData : SkinData) => {
 }
 
 const getHandNbt = (packFormat : number, rightHanded : boolean,itemNbt : string) : string => {
-	return ",HandItems:[" + ((rightHanded) ? `{Count:1b,id:"minecraft:player_head"${itemNbt}},{}` : `{},{Count:1b,id:"minecraft:player_head"${itemNbt}}`) + "]";
+	if (packFormat < 71) {
+		let insert = rightHanded ? `{Count:1b,id:"minecraft:player_head"${itemNbt}},{}` : `{},{Count:1b,id:"minecraft:player_head"${itemNbt}}`;
+		return `,HandItems:[${insert}]`;
+	}else {
+		let insert = rightHanded ? `mainhand:{count:1,id:"minecraft:player_head"${itemNbt}}` : `offhand:{id:"minecraft:player_head"${itemNbt}}`;
+		return `,equipment:{${insert}}`;
+	}
 }
 
 const generateSummonCommand = (packFormat : number, tags : string[],skinData : SkinData | null, rightHanded : boolean) => {
